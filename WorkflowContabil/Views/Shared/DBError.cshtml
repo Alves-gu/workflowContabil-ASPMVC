@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "DBError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DBError</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Erro</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Error.</h1>
+        <h2>Ocorreu um erro no banco de dados. Tente novamente mais tarde.</h2>
+    </hgroup>
+
+    <p>@ViewBag.Message</p>
+</body>
+</html>

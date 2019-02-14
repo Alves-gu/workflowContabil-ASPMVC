@@ -1,0 +1,50 @@
+﻿@model NvtecUploadFiles.Models.ClassArquivoUploadForm
+@{
+    ViewBag.Title = "Enviar novo arquivo";
+}
+<link rel="stylesheet" href="~/Content/loader.css" />
+<script src="~/Scripts/modal-load.js"></script>
+
+<div class="container">
+    <h2 class="text-center">Enviar novo arquivo</h2>
+    <hr />
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @using (Html.BeginForm("Upload", "Arquivo", FormMethod.Post, new { @class = "form", id = "formUploadDados", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="selectList">Departamento:</label>
+                    @Html.DropDownListFor(m => m.IdDepartamento, (SelectList)ViewBag.DepartamentosLista, "Selecione um departamento", new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    <label for="selectList">Cliente:</label>
+                    @Html.DropDownListFor(m => m.IdUsuarioDestinatario, (SelectList)ViewBag.ClientesLista, "Selecione um cliente", new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    <label for="inputFile">Descrição:</label>
+                    @Html.TextAreaFor(m => m.Descricao, new { type = "file", rows = "6", style = "resize:none;", @class = "form-control", id = "inputFile", required = "required" })
+                </div>
+                <div class="form-group">
+                    <label for="selectList">Tipo de documento:</label>
+                    @Html.DropDownListFor(m => m.IdTipoDoc, (SelectList)ViewBag.TipoDocsLista, "Selecione um tipo de documento: ", new { @class = "form-control", required = "required" })
+                </div>
+                <div class="form-group">
+                    <label for="inputFile">Arquivo:</label>
+                    @Html.TextBoxFor(m => m.Arquivo, new { type = "file", @class = "form-control", id = "fileField", required = "required" })
+                </div>
+                <input type="hidden" name="IdUsuarioRemetente" value="@HttpContext.Current.Session["id"]" />
+                <div class="nav navbar-right">
+                    <button class="btn btn-default" form="formUploadDados" type="submit">Enviar arquivo</button>
+                </div>
+                <h3 class="text-info text-center">@TempData["Message"]</h3>
+            }
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>
+

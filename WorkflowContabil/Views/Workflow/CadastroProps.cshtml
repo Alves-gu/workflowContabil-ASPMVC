@@ -1,0 +1,56 @@
+﻿@model NvtecUploadFiles.Models.Departamento
+@{
+    ViewBag.Title = "Cadastrar propriedades";
+}
+
+<h3>Cadastrar novo departamento</h3>
+<hr />
+
+
+<div class="panel panel-default">
+    <div class="container-fluid">
+        @using (Html.BeginForm("CadastrarDep", "Arquivo", FormMethod.Post, new { @class = "form", style = "margin-top:0.5%;", id = "formDep" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="inputDep" >Nome do departamento a ser adicionado:</label>
+                @Html.TextBoxFor(m => m.NomeDepartamento, new { @class = "form-control", id = "inputDep" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownList("sl",(SelectList)ViewBag.DepartamentosLista,"Departamentos já cadastrados no sistema", new { @class = "form-control" })
+            </div>
+            <div class="navbar navbar-right" style="margin-right:1.1%;">
+                <button type="submit" form="formDep" class="btn btn-default">Cadastrar</button>
+            </div>
+            <div class="form-group">
+                <h3 class="text-info">@ViewBag.MessageDep</h3>
+            </div>
+        }
+    </div>
+</div>
+
+<h3>Cadastrar novo tipo de documento</h3>
+<hr />
+
+<div class="panel panel-default">
+    @using (Html.BeginForm("CadastrarTipoDoc", "Arquivo", FormMethod.Post, new { @class = "form",style = "margin-top:0.5%;", id = "formTipoDoc" }))
+    {
+        <div class="container-fluid">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="inputTipoDoc">Nome do tipo a ser incluído:</label>
+                @Html.TextBox("TipoDoc",null, new { @class = "form-control", id = "inputTipoDoc" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownList("sl",(SelectList)ViewBag.TipoDocsLista,"Tipos de documento já cadastrados no sistema", new { @class = "form-control" })
+            </div>
+            <div class="navbar navbar-right" style="margin-right:1.1%;">
+                <button type="submit" form="formTipoDoc" class="btn btn-default">Cadastrar</button>
+            </div>
+            <div class="form-group">
+                <h3 class="text-info">@ViewBag.MessageTipoDoc</h3>
+            </div>
+        </div>
+    }
+</div>
+

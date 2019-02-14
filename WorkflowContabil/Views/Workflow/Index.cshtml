@@ -1,0 +1,62 @@
+﻿@model IEnumerable<NvtecUploadFiles.Models.Departamento>
+@{
+    var usuarioLogado = HttpContext.Current.Session;
+}
+<script>
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + "px";
+    }
+</script>
+@{
+    if ((string)usuarioLogado["grupo"] == "usuario")
+    {
+        ViewBag.Title = "Área do administrador";
+        <h2 class="text-center">Área do administrador</h2>
+    }
+    else
+    {
+        ViewBag.Title = "Área do cliente";
+        <h2 class="text-center">Área do cliente</h2>
+    }
+}
+
+
+<hr />
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="container-fluid">
+                <h3>Departamentos</h3>
+                <ul class="nav nav-tabs">
+                    @{
+                        if((string)usuarioLogado["grupo"] == "cliente")
+                        {
+                            foreach (var departamento in Model)
+                            {
+                                <li><a href="#" onclick="$('#conteudo').attr('src','/Workflow/ViewDocs?IdUsuario=@usuarioLogado["id"]&IdDepartamento=@departamento.IdDepartamento')">@departamento.NomeDepartamento</a></li>
+                            }
+                            <li><a href="#" onclick="$('#conteudo').attr('src','/Workflow/AllDocs?IdUsuario=@usuarioLogado["id"]')">Todos os arquivos não lidos</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#" onclick="$('#conteudo').attr('src','/Workflow/AllDocs?IdUsuario=@usuarioLogado["id"]')">Todos os arquivos enviados</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <iframe class="col-sm-12" style="border:0px;width:100%;" id="conteudo" onload="resizeIframe(this)"></iframe>
+        </div>
+        <div class="row">
+            @{
+                if ((string)usuarioLogado["grupo"] == "usuario")
+                {
+                    <div class="col-md-12">
+                        <div class="nav navbar-right" style="margin-right:0.25%;"><button class="btn btn-xs">@Html.ActionLink("Enviar novo arquivo", "EnviarArquivo", "Arquivo")</button></div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

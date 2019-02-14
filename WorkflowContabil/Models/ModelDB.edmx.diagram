@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="293d1df4f84d4660a9b567882440648d" Name="Diagram1">
+        <EntityTypeShape EntityType="uploadArquivosModel.arquivos" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uploadArquivosModel.Departamento" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="uploadArquivosModel.TipoDocumento" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uploadArquivosModel.TipoUsuario" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="uploadArquivosModel.usuarios" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="uploadArquivosModel.FK__arquivos__IdDepa__44952D46" ManuallyRouted="false" />
+        <AssociationConnector Association="uploadArquivosModel.FK__arquivos__IdTipo__4589517F" ManuallyRouted="false" />
+        <AssociationConnector Association="uploadArquivosModel.FK__arquivos__IdUsua__467D75B8" ManuallyRouted="false" />
+        <AssociationConnector Association="uploadArquivosModel.FK__arquivos__IdUsua__477199F1" ManuallyRouted="false" />
+        <AssociationConnector Association="uploadArquivosModel.FK__usuarios__IdTipo__671F4F74" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

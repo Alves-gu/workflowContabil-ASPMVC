@@ -1,0 +1,82 @@
+﻿@model IEnumerable<NvtecUploadFiles.Models.ArquivoViewModel>
+@{ 
+    Layout = null;
+    @Styles.Render("~/Content/css");
+    var usuarioLogado = HttpContext.Current.Session;
+}
+<body style="padding:20px;">
+    <div class="body-content">
+        @{
+            if(Model.Any())
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            @{ 
+                                if((string)usuarioLogado["grupo"] == "usuario")
+                                {
+                                    <th>Tipo de documento</th>
+                                    <th>Departamento</th>
+                                    <th>Data de envio</th>
+                                    <th>Data do último download</th>
+                                    <th>Visualizado</th>
+                                    <th>Ações</th>
+                                }
+                                else
+                                {
+                                    <th>Tipo de documento</th>
+                                    <th>Data de envio</th>
+                                    <th>Ações</th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ 
+                            if((string)usuarioLogado["grupo"] == "usuario")
+                            {
+                                foreach (var arquivo in Model)
+                                {
+                                    <tr>
+                                        <th>@arquivo.TipoDocumento</th>
+                                        <th>@arquivo.NomeDepartamento</th>
+                                        <th>@arquivo.DataUpload</th>
+                                        <th>@arquivo.DataUltDownload</th>
+                                        <th>@arquivo.ContDownloads Vezes</th>
+                                        <th><a class="btn btn-xs btn-link" href="/Arquivo/Show?IdArquivo=@arquivo.IdArquivo">Visualizar</a></th>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                foreach (var arquivo in Model)
+                                {
+                                    if (arquivo.Visualizado == 0)
+                                    {
+                                        <tr style="background-color:#efff18">
+                                            <th>@arquivo.TipoDocumento</th>
+                                            <th>@arquivo.DataUpload</th>
+                                            <th><a class="btn btn-xs btn-link" href="/Arquivo/Show?IdArquivo=@arquivo.IdArquivo">Visualizar</a></th>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>@arquivo.TipoDocumento</th>
+                                            <th>@arquivo.DataUpload</th>
+                                            <th><a class="btn btn-xs btn-link" href="/Arquivo/Show?IdArquivo=@arquivo.IdArquivo">Visualizar</a></th>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h2 class="text-center">Não há arquivos listados para essa categoria.</h2>
+            }
+        }
+    </div>
+</body>

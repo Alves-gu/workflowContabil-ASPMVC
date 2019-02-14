@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Visualizar documento";
+    Layout = null;
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Styles.Render("~/Content/css");
+    var usuarioLogado = HttpContext.Current.Session;
+}
+
+<div class="container body-content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">Documento N° @ViewBag.Arquivo.IdArquivo</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                <strong class="text-default">Nome do documento: </strong>@ViewBag.Arquivo.NomeArquivo
+            </p>
+            <p>
+                <strong class="text-default">Tipo de documento: </strong>@ViewBag.TipoDocumento.TipoDoc
+            </p>
+            <p>
+                <strong class="text-default">Departamento: </strong>@ViewBag.Departamento.NomeDepartamento
+            </p>
+            <p>
+                <strong class="text-default">Data de envio: </strong>@ViewBag.Arquivo.DataUpload
+            </p>
+            <p>
+                <strong class="text-default">Data do último download: </strong>@ViewBag.Arquivo.DataUltDownload
+            </p>
+            <p>
+                <strong class="text-default">Descrição: </strong>@ViewBag.Arquivo.Descricao
+            </p>
+            <p>
+                <strong class="text-default">Clique no botão para baixar o arquivo: </strong><a class="btn btn-xs btn-link" href="/Arquivo/DownloadFile?IdArquivo=@ViewBag.Arquivo.IdArquivo">Download</a>
+            </p>
+        </div>
+        <p>
+            <a class="btn btn-link" href="#" onclick="window.history.back()">Voltar</a>
+        </p>
+    </div>
+</div>
+

@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="uploadArquivosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="arquivos">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeArquivo" Type="varchar" MaxLength="650" Nullable="false" />
+          <Property Name="ContentType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Visualizado" Type="tinyint" Nullable="false" />
+          <Property Name="IdDepartamento" Type="int" Nullable="false" />
+          <Property Name="IdTipoDoc" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioRemetente" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioDestinatario" Type="int" Nullable="false" />
+          <Property Name="DataUpload" Type="datetime" Nullable="false" />
+          <Property Name="arquivo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="1500" Nullable="false" />
+          <Property Name="DataUltDownload" Type="datetime" />
+          <Property Name="ContDownloads" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeDepartamento" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDoc" />
+          </Key>
+          <Property Name="IdTipoDoc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoDoc" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="IdTipoUsu" />
+          </Key>
+          <Property Name="IdTipoUsu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoUsu" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeUsuario" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdTipoUsu" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Senha" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__arquivos__IdDepa__44952D46">
+          <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdTipo__4589517F">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDoc" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdTipoDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdUsua__467D75B8">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdUsuarioRemetente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdUsua__477199F1">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdUsuarioDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuarios__IdTipo__671F4F74">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="IdTipoUsu" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="IdTipoUsu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="uploadArquivosModelStoreContainer">
+          <EntitySet Name="arquivos" EntityType="Self.arquivos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__arquivos__IdDepa__44952D46" Association="Self.FK__arquivos__IdDepa__44952D46">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdTipo__4589517F" Association="Self.FK__arquivos__IdTipo__4589517F">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdUsua__467D75B8" Association="Self.FK__arquivos__IdUsua__467D75B8">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdUsua__477199F1" Association="Self.FK__arquivos__IdUsua__477199F1">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuarios__IdTipo__671F4F74" Association="Self.FK__usuarios__IdTipo__671F4F74">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="uploadArquivosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="arquivos">
+          <Key>
+            <PropertyRef Name="IdArquivo" />
+          </Key>
+          <Property Name="IdArquivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeArquivo" Type="String" MaxLength="650" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Visualizado" Type="Byte" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDoc" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioRemetente" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioDestinatario" Type="Int32" Nullable="false" />
+          <Property Name="DataUpload" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="arquivo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Departamento" Relationship="Self.FK__arquivos__IdDepa__44952D46" FromRole="arquivos" ToRole="Departamento" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK__arquivos__IdTipo__4589517F" FromRole="arquivos" ToRole="TipoDocumento" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK__arquivos__IdUsua__467D75B8" FromRole="arquivos" ToRole="usuarios" />
+          <NavigationProperty Name="usuarios1" Relationship="Self.FK__arquivos__IdUsua__477199F1" FromRole="arquivos" ToRole="usuarios" />
+          <Property Name="Descricao" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataUltDownload" Type="DateTime" Precision="3" />
+          <Property Name="ContDownloads" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="arquivos" Relationship="Self.FK__arquivos__IdDepa__44952D46" FromRole="Departamento" ToRole="arquivos" />
+          <Property Name="NomeDepartamento" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDoc" />
+          </Key>
+          <Property Name="IdTipoDoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoDoc" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="arquivos" Relationship="Self.FK__arquivos__IdTipo__4589517F" FromRole="TipoDocumento" ToRole="arquivos" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="IdTipoUsu" />
+          </Key>
+          <Property Name="IdTipoUsu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoUsu" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK__usuarios__IdTipo__671F4F74" FromRole="TipoUsuario" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdTipoUsu" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="arquivos" Relationship="Self.FK__arquivos__IdUsua__467D75B8" FromRole="usuarios" ToRole="arquivos" />
+          <NavigationProperty Name="arquivos1" Relationship="Self.FK__arquivos__IdUsua__477199F1" FromRole="usuarios" ToRole="arquivos" />
+          <NavigationProperty Name="TipoUsuario" Relationship="Self.FK__usuarios__IdTipo__671F4F74" FromRole="usuarios" ToRole="TipoUsuario" />
+        </EntityType>
+        <Association Name="FK__arquivos__IdDepa__44952D46">
+          <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdTipo__4589517F">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDoc" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdTipoDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdUsua__467D75B8">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdUsuarioRemetente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__arquivos__IdUsua__477199F1">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="arquivos" Type="Self.arquivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="arquivos">
+              <PropertyRef Name="IdUsuarioDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuarios__IdTipo__671F4F74">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="IdTipoUsu" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="IdTipoUsu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="databaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="arquivos" EntityType="Self.arquivos" />
+          <EntitySet Name="Departamento" EntityType="Self.Departamento" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+          <AssociationSet Name="FK__arquivos__IdDepa__44952D46" Association="Self.FK__arquivos__IdDepa__44952D46">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdTipo__4589517F" Association="Self.FK__arquivos__IdTipo__4589517F">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdUsua__467D75B8" Association="Self.FK__arquivos__IdUsua__467D75B8">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__arquivos__IdUsua__477199F1" Association="Self.FK__arquivos__IdUsua__477199F1">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="arquivos" EntitySet="arquivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuarios__IdTipo__671F4F74" Association="Self.FK__usuarios__IdTipo__671F4F74">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="uploadArquivosModelStoreContainer" CdmEntityContainer="databaseEntities">
+          <EntitySetMapping Name="arquivos">
+            <EntityTypeMapping TypeName="uploadArquivosModel.arquivos">
+              <MappingFragment StoreEntitySet="arquivos">
+                <ScalarProperty Name="ContDownloads" ColumnName="ContDownloads" />
+                <ScalarProperty Name="DataUltDownload" ColumnName="DataUltDownload" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdArquivo" ColumnName="IdArquivo" />
+                <ScalarProperty Name="NomeArquivo" ColumnName="NomeArquivo" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Visualizado" ColumnName="Visualizado" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="IdTipoDoc" ColumnName="IdTipoDoc" />
+                <ScalarProperty Name="IdUsuarioRemetente" ColumnName="IdUsuarioRemetente" />
+                <ScalarProperty Name="IdUsuarioDestinatario" ColumnName="IdUsuarioDestinatario" />
+                <ScalarProperty Name="DataUpload" ColumnName="DataUpload" />
+                <ScalarProperty Name="arquivo" ColumnName="arquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departamento">
+            <EntityTypeMapping TypeName="uploadArquivosModel.Departamento">
+              <MappingFragment StoreEntitySet="Departamento">
+                <ScalarProperty Name="NomeDepartamento" ColumnName="NomeDepartamento" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDocumento">
+            <EntityTypeMapping TypeName="uploadArquivosModel.TipoDocumento">
+              <MappingFragment StoreEntitySet="TipoDocumento">
+                <ScalarProperty Name="IdTipoDoc" ColumnName="IdTipoDoc" />
+                <ScalarProperty Name="TipoDoc" ColumnName="TipoDoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUsuario">
+            <EntityTypeMapping TypeName="uploadArquivosModel.TipoUsuario">
+              <MappingFragment StoreEntitySet="TipoUsuario">
+                <ScalarProperty Name="IdTipoUsu" ColumnName="IdTipoUsu" />
+                <ScalarProperty Name="TipoUsu" ColumnName="TipoUsu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="uploadArquivosModel.usuarios">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="NomeUsuario" ColumnName="NomeUsuario" />
+                <ScalarProperty Name="IdTipoUsu" ColumnName="IdTipoUsu" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

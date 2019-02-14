@@ -1,0 +1,70 @@
+﻿@{
+    var usuarioLogado = HttpContext.Current.Session;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="~/Content/Images/logoTop32.png" /></a>
+                @Html.ActionLink("Workflow Contábil", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })   
+            </div>
+                @{
+                    if (usuarioLogado["usuario"] != null)
+                    {
+                        <div class="navbar-collapse collapse">
+                            <div class="dropdown nav navbar-nav" style="margin:0.5%">
+                                <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Menu principal
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Página inicial", "Index", "Workflow")</li>
+                                    @if ((string)usuarioLogado["grupo"] == "usuario")
+                                    {
+                                        <li>@Html.ActionLink("Cadastro de usuários", "PaginaCadastro", "Workflow")</li>
+                                        <li>@Html.ActionLink("Envio de arquivos", "EnviarArquivo", "Arquivo")</li>
+                                        <li>@Html.ActionLink("Cadastrar novas propriedades de arquivo", "CadastroProps", "Workflow")</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class=" navbar-right" style="margin-top:7.5px;">
+                                @{
+                                    if (usuarioLogado["usuario"] != null)
+                                    {
+                                        <label style="color:white">Bem vindo(a) @HttpContext.Current.Session["usuario"]! </label>
+                                        @Html.ActionLink("Sair", "Logout","Usuario",null, new { @class = "btn btn-link" })
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+    </div>
+</div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Gustavo Alves</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
